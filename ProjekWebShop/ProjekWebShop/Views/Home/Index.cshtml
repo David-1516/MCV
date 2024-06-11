@@ -1,0 +1,272 @@
+﻿@model ProjekWebShop.ViewModels.ProductsViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Home Page";
+    @if (SignInManager.IsSignedIn(User))
+    {
+        Layout = "_RegisteredLayout";
+    }
+}
+<style>
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .price {
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .discount-price {
+        font-size: 1rem;
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    .badge-sale {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: red;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .card {
+        position: relative;
+    }
+
+    .btn-group {
+        width: 100%;
+    }
+
+        .btn-group > button {
+            width: 50%;
+        }
+
+    .card-link {
+        color: text-decoration: none;
+    }
+
+        .card-link:hover {
+            text-decoration: none;
+        }
+
+</style>
+
+<h3>Najprodavaniji proizvodi</h3>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var product in Model.TopSellingproducts)
+        {
+
+            <div class="col-md-3">
+                <a href="/home/productdetails?productId=@product.Id">
+                    <div class="card">
+                        @if (product.IsDiscount)
+                        {
+
+                            <div class="badge badge-sale">Akcija</div>
+                        }
+                        <img src="/images/@product.ProductImages.First().ImagePath" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            @if (product.IsDiscount)
+                            {
+
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <div class="discount-price">@product.Price Eura</div>
+                            }
+                            else
+                            {
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <br />
+                            }
+                            <div class="brn-group" role="group">
+                                <a href="/home/AddToCart?productId=@product.Id" class="btn btn-primary" type="button">U Kosaricu</a>
+                                <button class="btn btn-success" type="button">Kupi</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+<h3>Najnoviji proizvodi</h3>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var product in Model.Newestproudcts)
+        {
+
+            <div class="col-md-3">
+                <a href="/home/productdetails?productId=@product.Id">
+                    <div class="card">
+                        @if (product.IsDiscount)
+                        {
+
+                            <div class="badge badge-sale">Akcija</div>
+                        }
+                        <img src="/images/@product.ProductImages.First().ImagePath" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            @if (product.IsDiscount)
+                            {
+
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <div class="discount-price">@product.Price Eura</div>
+                            }
+                            else
+                            {
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <br />
+                            }
+                            <div class="brn-group" role="group">
+                                <a href="/home/AddToCart?productId=@product.Id" class="btn btn-primary" type="button">U Kosaricu</a>
+                                <button class="btn btn-success" type="button">Kupi</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+    </div>
+</div>
+
+                                
+<h3>Najprodavaniji proizvodi</h3>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var product in Model.TopSellingproducts)
+        {
+
+            <div class="col-md-3">
+                <a href="/home/productdetails?productId=@product.Id">
+                    <div class="card">
+                        @if (product.IsDiscount)
+                        {
+
+                            <div class="badge badge-sale">Akcija</div>
+                        }
+                        <img src="/images/@product.ProductImages.First().ImagePath" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            @if (product.IsDiscount)
+                            {
+
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <div class="discount-price">@product.Price Eura</div>
+                            }
+                            else
+                            {
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <br />
+                            }
+                            <div class="brn-group" role="group">
+                                <a href="/home/AddToCart?productId=@product.Id" class="btn btn-primary" type="button">U Kosaricu</a>
+                                <button class="btn btn-success" type="button">Kupi</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+    </div>
+</div>
+
+<h3>Na popustu proizvodi</h3>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var product in Model.Discountedprouducts)
+        {
+
+            <div class="col-md-3">
+                <a href="/home/productdetails?productId=@product.Id">
+                    <div class="card">
+                        @if (product.IsDiscount)
+                        {
+
+                            <div class="badge badge-sale">Akcija</div>
+                        }
+                        <img src="/images/@product.ProductImages.First().ImagePath" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            @if (product.IsDiscount)
+                            {
+
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <div class="discount-price">@product.Price Eura</div>
+                            }
+                            else
+                            {
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <br />
+                            }
+                            <div class="brn-group" role="group">
+                                <a href="/home/AddToCart?productId=@product.Id" class="btn btn-primary" type="button">U Kosaricu</a>
+                                <button class="btn btn-success" type="button">Kupi</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+    </div>
+</div>
+
+
+<h3>Istahnuti proizvodi</h3>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var product in Model.HotProducts)
+        {
+
+            <div class="col-md-3">
+                <a href="/home/productdetails?productId=@product.Id">
+                    <div class="card">
+                        @if (product.IsDiscount)
+                        {
+
+                            <div class="badge badge-sale">Akcija</div>
+                        }
+                        <img src="/images/@product.ProductImages.First().ImagePath" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            @if (product.IsDiscount)
+                            {
+
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <div class="discount-price">@product.Price Eura</div>
+                            }
+                            else
+                            {
+                                <div class="price">@product.DiscountPrice Eura</div>
+                                <br />
+                            }
+                            <div class="brn-group" role="group">
+                               <a href="/home/AddToCart?productId=@product.Id" class="btn btn-primary" type="button">U Kosaricu</a>
+                                <button class="btn btn-success" type="button">Kupi</button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+    </div>
+</div>

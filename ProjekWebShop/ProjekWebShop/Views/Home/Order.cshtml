@@ -1,0 +1,97 @@
+﻿@using ProjekWebShop.ViewModels
+@model List<CartItemViewModel>
+
+
+    <form action="/home/order" method="post">
+        <div>
+            <h4>Podatci za narudzbu:</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label">Ime</label>
+                        <input class="form-control" type="text" name="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Prezime</label>
+                        <input class="form-control" type="text" name="LastName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Adresa</label>
+                        <input class="form-control" type="text" name="Address" />
+                    </div>
+                     <div class="form-group">
+                            <label class="control-label">Mjesto</label>
+                            <input class="form-control" type="text" name="City" />
+                     </div>
+                    <div class="form-group">
+                        <label class="control-label">Postanski Broj</label>
+                        <input class="form-control" type="text" name="Zip" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Telefon</label>
+                        <input class="form-control" type="text" name="Phone" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Nacin dostave</label>
+                       <select name="Delivery">
+                           <option value="1">Osobno preuzimanje</option>
+                           <option value="2">Dostava na kucnu adresu</option>
+                       </select>
+                    </div>
+                </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table class="table">
+                    <tr>
+                        <th>Proizvod</th>
+                        <th>Cijena</th>
+                        <th>Količina</th>
+                        <th>Ukupno</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="/images/@item.Product.ProductImages.First().ImagePath" style="width:50px; height:50px; object-fit:cover; margin-right:10px;">
+
+                                </div>
+                            </td>
+                            <td>
+                                @item.Product.Price.ToString("n2") €
+                            </td>
+                            <td>
+                                <div class="input-group">
+
+                                    <label class="btn btn-outline-danger mx-3">@item.Quantity</label>
+
+                                </div>
+                            </td>
+                            <td>
+                                @((item.Product.Price * item.Quantity).ToString("n2")) €
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div class="float-end">
+                    <table class="table">
+                        <tr>
+                            <th>Osnovica:</th>
+                            <th>@Model.Sum(x => x.Quantity * x.Product.Price).ToString("n2") €</th>
+                        </tr>
+                        <tr>
+                            <th>PDV:</th>
+                            <th>@Model.Sum(x => x.Quantity * x.Product.Price * 25 / 100).ToString("n2") €</th>
+                        </tr>
+                        <tr>
+                            <th>Ukupno:</th>
+                            <th>@Model.Sum(x => x.Quantity * x.Product.Price * 1.25).ToString("n2") €</th>
+                        </tr>
+                    </table>
+                   <button type="submit" class="btn btn-danger">Zavrsi</button>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </form>

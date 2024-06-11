@@ -1,0 +1,174 @@
+﻿@model List<Product>
+
+    <style>
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .price {
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .discount-price {
+        font-size: 1rem;
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    .badge-sale {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: red;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .card {
+        position: relative;
+    }
+
+    .btn-group {
+        width: 100%;
+    }
+
+        .btn-group > button {
+            width: 50%;
+        }
+
+    .card-link {
+        color: text-decoration: none;
+    }
+
+        .card-link:hover {
+            text-decoration: none;
+
+        }
+
+    </style>
+   
+
+    <form action="/home/products" method="get">
+        <input type="hidden" name="categoryId" value="@ViewBag.CategoryId" />
+        <input type="text" name="searchTerm"value="@ViewBag.SearchTerm" placeholder="Pretrazi.."/>
+        <select name="sortOrder">
+            
+        @if (ViewBag.SortOrder == "name")
+        {
+            <option value="name" selected>(A-Z)</option>
+        }
+        else
+        {
+            
+        <option value="name">(A-Z)</option>
+        }
+        @if (ViewBag.SortOrder == "name_desc")
+        {
+            <option value="name_desc" selected>(A-Z)</option>
+        }
+        else
+        {
+
+            <option value="name_desc">(Z-A)</option>
+        }
+        @if (ViewBag.SortOrder == "price")
+        {
+            <option value="price" selected>Najjeftiniji</option>
+        }
+        else
+        {
+
+            <option value="price">Najjeftiniji</option>
+        }
+        @if (ViewBag.SortOrder == "price_desc")
+        {
+            <option value="price_desc" selected>Najskuplji</option>
+        }
+        else
+        {
+
+            <option value="price_desc">Najskuplji</option>
+        }
+        @if (ViewBag.SortOrder == "newest")
+        {
+            <option value="newest" selected>Najnoviji</option>
+        }
+        else
+        {
+
+            <option value="newest">Najnoviji</option>
+        }
+        @if (ViewBag.SortOrder == "oldest")
+        {
+            <option value="oldest" selected>Najstariji</option>
+        }
+        else
+        {
+
+            <option value="oldest">Najstariji</option>
+        }
+        </select>
+        <button type="submit">Pretrazi</button>
+    </form>
+
+    <div class="container mt-5">
+        <div class="row">
+        @foreach(var product in Model)
+        {
+            
+            <div class="col-md-3">
+                <a href="/home/productdetails?productId=@product.Id">
+                <div class="card">
+                    @if (product.IsDiscount)
+                    {
+                        
+                    <div class="badge badge-sale">Akcija</div>
+                    }
+                    <img src="/images/@product.ProductImages.First().ImagePath" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Description</p>
+                        @if (product.IsDiscount)
+                        {
+                            
+                        <div class="price">@product.DiscountPrice Eura</div>
+                            <div class="discount-price">@product.Price Eura</div>
+                        }
+                        else
+                        {
+                            <div class="price">@product.DiscountPrice Eura</div>
+                           <br />
+                        }
+                        <div class="brn-group" role="group">
+                            <button class="btn btn-primary"type="button">U Kosaricu</button>
+                            <button class="btn btn-success" type="button">Kupi</button>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+        }
+        </div>
+    </div>
+
+<div>
+    @if (ViewBag.Pagenumber > 1)
+    {
+        <a href="/home/products?categoryId=@(ViewBag.CategoryId)&shearchTearm=@(ViewBag.SearchTerm)&sortOrder=@ViewBag.SortOrder&page=1">Prva</a>
+        <a href="/home/products?categoryId=@(ViewBag.CategoryId)&shearchTearm=@(ViewBag.SearchTerm)&sortOrder=@ViewBag.SortOrder&page=@(ViewBag.PageNumber-1)">Prethodna</a>
+    }
+    @for (int i = 1; i <ViewBag.TotalPages; i++)
+    {
+        <a href="/home/products?categoryId=@(ViewBag.CategoryId)&shearchTearm=@(ViewBag.SearchTerm)&sortOrder=@ViewBag.SortOrder&page=@i">@i</a>
+    }
+    
+    @if (ViewBag.PageNumber < ViewBag.TotalPages)
+    {
+        <a href="/home/products?categoryId=@(ViewBag.CategoryId)&shearchTearm=@(ViewBag.SearchTerm)&sortOrder=@ViewBag.SortOrder&page=@(ViewBag.PageNumber+1)">Sljedeca</a>
+        <a a href="/home/products?categoryId=@(ViewBag.CategoryId)&shearchTearm=@(ViewBag.SearchTerm)&sortOrder=@ViewBag.SortOrder&page=@(ViewBag.TotalPages)">Posljednja</a>
+    }
+</div>

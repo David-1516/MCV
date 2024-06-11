@@ -1,0 +1,26 @@
+﻿@model List<Category>
+
+<h4>Sve Kategorije</h4>
+<table class="table">
+    <tr>
+        <th>Slika</th>
+        <th>Naziv</th>
+        <th>Opis</th>
+        <th></th>
+    </tr>
+    @foreach (var category in Model)
+    {
+
+        <tr>
+            <td>
+                <img src="/images/@category.ImagePath"  width="50" height="50"/>
+            </td>
+            <td>@category.Name</td>
+            <td>@category.Description</td>
+            <td>
+                <button class="btn-close"></button>
+            </td>
+        </tr>
+    }
+</table>
+<a href="/Categories/Create" class="btn btn-dark">Dodal</a>

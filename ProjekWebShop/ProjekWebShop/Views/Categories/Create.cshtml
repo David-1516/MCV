@@ -1,0 +1,18 @@
+﻿
+<h4>Dodaj novu kategoriju</h4>
+
+<form action="/Categories/Create" method="post" enctype="multipart/form-data">
+    <div class="form-goup">
+        <label class="control-label" for="name">Naziv Kategorije</label>
+        <input class="form-control" id="name" type="text" name="Name" />
+    </div>
+    <div class="form-goup">
+        <label class="control-label" for="description">Opis Kategorije</label>
+        <input class="form-control" id="description" type="text" name="Description" />
+    </div>
+    <div class="form-goup">
+        <label class="control-label" >Fotografija:</label>
+        <input type="file" name="image" />
+    </div>
+    <input class="btn-dark" type="submit" value="Dodaj" />
+</form>

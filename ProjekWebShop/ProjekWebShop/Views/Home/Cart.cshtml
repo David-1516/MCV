@@ -1,0 +1,69 @@
+﻿@using ProjekWebShop.ViewModels
+@model List<CartItemViewModel>
+
+<table class="table">
+    <tr>
+        <th>Proizvod</th>
+        <th>Cijena</th>
+        <th>Količina</th>
+        <th>Ukupno</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div class="d-flex align-items-center">
+                    <img src="/images/@item.Product.ProductImages.First().ImagePath" style="width:50px; height:50px; object-fit:cover; margin-right:10px;">
+                    <span>@item.Product.Name</span>
+                </div>
+            </td>
+            <td>
+                @item.Product.Price.ToString("n2") €
+            </td>
+            <td>
+                <div class="input-group">
+                    <form method="post" action="/home/UpdateCart">
+                        <input type="hidden" name="productId" value="@item.Product.Id">
+                        <input type="hidden" name="quantity" value="@(item.Quantity-1)">
+                        <button class="btn btn-danger" type="submit">-</button>
+                    </form>
+
+                    <label class="btn btn-outline-danger mx-3">@item.Quantity</label>
+
+                    <form method="post" action="/home/UpdateCart">
+                        <input type="hidden" name="productId" value="@item.Product.Id">
+                        <input type="hidden" name="quantity" value="@(item.Quantity+1)">
+                        <button class="btn btn-danger" type="submit">+</button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                @((item.Product.Price * item.Quantity).ToString("n2")) €
+            </td>
+            <td>
+                <form method="post" action="/home/RemoveFromCart">
+                    <input type="hidden" name="productId" value="@item.Product.Id">
+                    <button type="submit" class="btn btn-danger">Ukloni <i class="bg-info bi-trash-fill"></i></button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+    <div class="float-end">
+        <table class="table">
+            <tr>
+                <th>Osnovica:</th>
+                <th>@Model.Sum(x=>x.Quantity*x.Product.Price).ToString("n2") €</th>
+            </tr>
+        <tr>
+            <th>PDV:</th>
+            <th>@Model.Sum(x => x.Quantity * x.Product.Price*25/100).ToString("n2") €</th>
+        </tr>
+        <tr>
+            <th>Ukupno:</th>
+            <th>@Model.Sum(x => x.Quantity * x.Product.Price*1.25).ToString("n2") €</th>
+        </tr>
+        </table>
+        <a href="/home/order" class="btn btn-danger">Naruci</a>
+    </div>

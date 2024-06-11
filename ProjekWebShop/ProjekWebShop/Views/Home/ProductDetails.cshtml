@@ -1,0 +1,81 @@
+﻿@model Product
+<style>
+    .image-container {
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .thumbnail {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .price {
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .discount-price {
+        font-size: 1.2rem;
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    .badge-sale {
+        background-color: red;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+
+    }
+
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="image-container mb-3">
+                <img src="/images/@Model.ProductImages.First().ImagePath" class="product-image" />
+            </div> 
+            <div class="row">
+                @foreach(var image in Model.ProductImages)
+                {
+                    
+                <img src="/images/@image.ImagePath" class="thumbnail" />
+                }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+            @if (Model.IsDiscount)
+            {
+                
+            <p><span class="badge badge-sale">Akcija</span></p>
+            }
+            @if (Model.IsDiscount)
+            {
+                
+                <p class="price">@Model.DiscountPrice €</p>
+                <p class="discount-price">@Model.Price €</p>
+            }
+            else
+            {
+                <p class="discount-price">@Model.Price €</p>
+            }
+            <h5>Opis proizvoda:</h5>
+            <p>@Model.Description</p>
+            <div>
+                <button type="button" class="btn btn-primary">U košaricu</button>
+                <button type="button" class="btn btn-success">Kupi</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@model List<Category>
+
+<style>
+    .card-img-top {
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .card {
+        margin-bottom: 20px;
+    }
+</style>
+<h2>Kategorije Porizvoda</h2>
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var category in Model)
+        {
+        <div class="col-md-3">
+            <a href="/home/products?categoryId=@category.Id">
+                <div class="card">
+                    <img src="/images/@category.ImagePath" class="card-img-top" />
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name</h5>
+                    </div>
+                </div>
+            </a>    
+        </div>
+        }
+
+    </div>
+</div>
